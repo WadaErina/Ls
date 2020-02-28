@@ -1,4 +1,4 @@
-package Ls;
+package ls;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,14 +14,13 @@ import java.util.List;
 public class Ls {
 
     public String[] viewFiles;
+    public String path;
+    public String options;
 
-    public void main(String[] args) throws IOException {
+    public void ls(String[] args) throws IOException {
         // 配列のままだと0番目と1番めを同時に見ることができないため、Listに変える
         List<String> argsLists = new ArrayList<String>();
         Collections.addAll(argsLists, args);
-
-        String path = null;
-        String options = null;
 
         if (!argsLists.isEmpty()) {
             for (int i = 0; i < argsLists.size(); i++) {
@@ -42,7 +41,6 @@ public class Ls {
         // pathをファイルの中、配列の中に入れる
         File file = new File(path);
         File[] files = file.listFiles();
-//        String[] viewFiles = makeNoOptionFiles(files);
         this.viewFiles = makeNoOptionFiles(files);
 
         // 何のオプションかを判別する
@@ -55,7 +53,7 @@ public class Ls {
                 this.viewFiles = makeOptionAFiles(viewFiles);
             }
             if (options.contains("-") && options.contains("t")) {
-                this.viewFiles = makeOptionRFiles(viewFiles);
+                this.viewFiles = makeOptionTFiles(viewFiles);
             }
             if (options.contains("-") && options.contains("r")) {
                 this.viewFiles = makeOptionRFiles(viewFiles);
@@ -132,16 +130,15 @@ public class Ls {
         return optionRFiles;
     }
 
-    public static String[] makeOptionAFiles(String[] viewFiles){
+    public static String[] makeOptionAFiles(String[] viewFiles) {
         String[] optionAFiles = new String[viewFiles.length];
         optionAFiles = viewFiles;
         return optionAFiles;
     }
 
-    public static String[] makeOptionTFiles(String[] viewFiles){
+    public static String[] makeOptionTFiles(String[] viewFiles) {
         String[] optionTFiles = new String[viewFiles.length];
         optionTFiles = viewFiles;
         return optionTFiles;
     }
 }
-
